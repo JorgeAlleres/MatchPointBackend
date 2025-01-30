@@ -14,64 +14,66 @@ datasource db {
 }
 
 model User {
-  id        Int   @id   @default(autoincrement())
-  name      String
-  surname   String?
-  email     String  @unique
-  password  String
-  role      String? // admin  vip   null
-  active    Boolean   @default(true)
-  accepNotifications Boolean @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  rates   Rate[]
-  plans   Plan[]
+  id                  Int       @id   @default(autoincrement())
+  userName            String
+  email               String    @unique
+  password            String
+  role                String?   //Admin  Vip   null
+  active              Boolean   @default(true)
+  acceptNotifications Boolean   @default(true)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  Room Room[]
+
+  User_Room User_Room[]
 }
 
-model Plan {
-  id            Int   @id   @default(autoincrement())
-  name         String
-  description   String?
-  location      String
-  price         Int
-  active        Boolean   @default(true)
-  published     DateTime @default(now())  // iso8601
-  expired       DateTime                  // iso8601
-  peopleRegistered  Int //Personas que se han inscrito a la oferta
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt 
+model Room {
+  id                  Int       @id   @default(autoincrement())
+  roomName            String
+  description         String?
+  capacity            Int
+  password            String?
+  private             Boolean   @default(false)
+  published           DateTime  @default(now())  // iso8601
+  expired             DateTime?                  // iso8601
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt 
 
   //FK
-  idCategory    Int?
-  category      Category? @relation(fields: [idCategory], references: [id])
+  idRoomGame          Int?
+  game                Game?     @relation(fields: [idRoomGame], references: [id])
 
-  idUserCreator    Int
-  userCreator      User @relation(fields: [idUserCreator], references: [id])
+  idUserCreator       Int
+  userCreator         User      @relation(fields: [idUserCreator], references: [id])
 
-  rates         Rate[]
+  User_Room User_Room[]
 }
 
-model Category {
-  id    Int   @id   @default(autoincrement())
-  name  String  @unique 
+model Game {
+  id                  Int       @id   @default(autoincrement())
+  gameName            String    @unique
+  genre               String
+  platform            String
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  plans     Plan[]
+  Room Room[]
 }
 
-model Rate {
-  idUser    Int
-  idPlan   Int
-  value     Int   //@check()
+model User_Room {
+  idUser              Int
+  idRoom              Int
+  roleInRoom          String
+  dateUnion           DateTime
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
   //FK
-  user      User @relation(fields: [idUser], references: [id])
-  plan     Plan @relation(fields: [idPlan], references: [id])
+  user                User @relation(fields: [idUser], references: [id])
+  room                Room @relation(fields: [idRoom], references: [id])
 
-  @@id([idUser, idPlan])
+  @@id([idUser, idRoom])
 }

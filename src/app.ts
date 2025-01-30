@@ -1,7 +1,7 @@
 import express, {Response, Request} from 'express'
 import authRouter from './routes/auth.routes'
 import userRouter from './routes/user.routes'
-import planRouter from './routes/plan.routes'
+import roomRouter from './routes/room.routes'
 import helmet from 'helmet'
 import cors from 'cors'
 import compression from 'compression'
@@ -29,7 +29,8 @@ app.use(limiter)
 
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
-app.use('/api/plan',planRouter)
+app.use('/api/plan',roomRouter)
+//app.use('/api/plan',gameRouter)
 
 app.get('/', (req:Request, res:Response)=>{
     res.send('Bienvenido al backend (PLAN IT)')
