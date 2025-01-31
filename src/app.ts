@@ -1,7 +1,8 @@
 import express, {Response, Request} from 'express'
 import authRouter from './routes/auth.routes'
 import userRouter from './routes/user.routes'
-import roomRouter from './routes/room.routes'
+//import roomRouter from './routes/room.routes'
+import gameRouter from './routes/game.routes'
 import helmet from 'helmet'
 import cors from 'cors'
 import compression from 'compression'
@@ -22,18 +23,18 @@ app.use(cors({
 }))
 
 const limiter = rateLimit({
-    max: 3,
+    max: 100,
     windowMs: 1000*15*60 //15 minutos
 })
 app.use(limiter)
 
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
-app.use('/api/plan',roomRouter)
-//app.use('/api/plan',gameRouter)
+//app.use('/api/plan',roomRouter)
+app.use('/api/plan',gameRouter)
 
 app.get('/', (req:Request, res:Response)=>{
-    res.send('Bienvenido al backend (PLAN IT)')
+    res.send('Bienvenido al backend (MATCHPOINT)')
 })
 
 export default app
