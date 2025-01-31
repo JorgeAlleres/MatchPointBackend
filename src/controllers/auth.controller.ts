@@ -16,7 +16,6 @@ export class AuthController{
     static async login(req:Request, res:Response, next:NextFunction){
         try{
             const userData = req.body
-            //TODO validar el body (opcional)
             const token = await AuthService.login(userData.email, userData.password)
             //TODO inyectar cookie al cliente
             res.status(201).json({message:'Login successfully:', token})
