@@ -1,7 +1,7 @@
 import express, {Response, Request} from 'express'
 import authRouter from './routes/auth.routes'
 import userRouter from './routes/user.routes'
-//import roomRouter from './routes/room.routes'
+import roomRouter from './routes/room.routes'
 import gameRouter from './routes/game.routes'
 import helmet from 'helmet'
 import cors from 'cors'
@@ -30,8 +30,8 @@ app.use(limiter)
 
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
-//app.use('/api/plan',roomRouter)
-app.use('/api/plan',gameRouter)
+app.use('/api/room',roomRouter)
+app.use('/api/game',gameRouter)
 
 app.get('/', (req:Request, res:Response)=>{
     res.send('Bienvenido al backend (MATCHPOINT)')
