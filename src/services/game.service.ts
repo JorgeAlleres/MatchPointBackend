@@ -1,11 +1,17 @@
+import { prisma } from "../database/database";
 import { HttpException } from "../exceptions/httpException";
-import { Game, PrismaClient } from "prisma/prisma-client";
+import { Game } from "prisma/prisma-client";
 
-const prisma = new PrismaClient()
 export class GameService {
     static async getAll() {
         const findGames = await prisma.game.findMany()
         return findGames
+    }
+    static async getById(id: number) {
+        const findGame = await prisma.game.findUnique({ where: { id: id } });
+        if (!findGame) throw new HttpException(404, "Game doesn't exist");
+    
+        return findGame;
     }
     static async create(game: Game) {
         const findGame = await prisma.game.findFirst({ where: { gameName: game.gameName } })
