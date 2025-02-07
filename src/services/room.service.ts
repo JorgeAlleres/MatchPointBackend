@@ -1,28 +1,61 @@
+import { NextFunction } from "express";
+import { prisma } from "../database/database";
 import { HttpException } from "../exceptions/httpException";
-import { Room, PrismaClient } from "prisma/prisma-client";
+import { Room } from "prisma/prisma-client";
 
-const prisma = new PrismaClient()
 export class RoomService {
-    static async getAll() {
-        const findRooms = await prisma.room.findMany()
-        return findRooms
+    static async getById(id: number) {
+        const findRoom = await prisma.room.findUnique({ where: { id } })
+        if (!findRoom) throw new HttpException(404, 'Room not found')
+        return findRoom
     }
-    static async create(room: Room) {
-        const findRoom = await prisma.room.findFirst({ where: { roomName: room.roomName } })
-        if (findRoom) throw new HttpException(409, `Room ${room.roomName} already exists`)
-        return await prisma.room.create({data: {...room}})
+    static async getAll(roomName: string = '') {
+
+        return await prisma.room.findMany({
+            where: {
+                ...(roomName && {
+                    roomName: {
+                        contains: roomName,
+                        //mode: "insensitive" // Búsqueda sin distinción entre mayúsculas y minúsculas
+                    }
+                })
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            take: 100,
+            include: {
+                game: {
+                    select: {
+                        gameName: true
+                    }
+                }
+            }
+        });
     }
-    static async delete(idRoom: number) {
-        const roomDeleted = await prisma.room.delete({ where: { id: idRoom } })
-        if (!roomDeleted) throw new HttpException(404, `RoomID ${idRoom} doesnt exists`)
-        return roomDeleted
-    }
-    static async update(idRoom: number, room: Room) {
-        const roomUpdate = await prisma.room.update({ 
-            where: { id: idRoom },
-            data: {...room}
+    static async create(room: Room, idUser: number) {
+        return await prisma.room.create({
+            data: {
+                ...room,
+                idUserCreator: idUser
+            } 
         })
-        if (!roomUpdate) throw new HttpException(409, `RoomID ${idRoom} doesnt exists`)
-        return roomUpdate
+    }
+    static async delete(id: number) {
+        try {
+            return await prisma.room.delete({ where: { id } });
+        } catch (error) {
+            throw new HttpException(404, "Room not found");
+        }
+    }
+    static async update(id: number, room: Room) {
+        const findRoom = await prisma.room.findUnique({where:{id}})
+        if(!findRoom) throw new HttpException(404, 'Room doesnt exists')
+        return await prisma.room.update({
+            where: {id},
+            data: {
+                ...room,
+            } 
+        })
     }
 }
