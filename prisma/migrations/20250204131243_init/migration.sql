@@ -1,4 +1,17 @@
 -- CreateTable
+CREATE TABLE "User" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "userName" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "role" TEXT,
+    "active" BOOLEAN NOT NULL DEFAULT true,
+    "acceptNotifications" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
+
+-- CreateTable
 CREATE TABLE "Room" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "roomName" TEXT NOT NULL,
@@ -40,26 +53,8 @@ CREATE TABLE "User_Room" (
     CONSTRAINT "User_Room_idRoom_fkey" FOREIGN KEY ("idRoom") REFERENCES "Room" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- RedefineTables
-PRAGMA defer_foreign_keys=ON;
-PRAGMA foreign_keys=OFF;
-CREATE TABLE "new_User" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "userName" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "role" TEXT,
-    "active" BOOLEAN NOT NULL DEFAULT true,
-    "acceptNotifications" BOOLEAN NOT NULL DEFAULT true,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
-);
-INSERT INTO "new_User" ("active", "createdAt", "email", "id", "password", "role", "updatedAt") SELECT "active", "createdAt", "email", "id", "password", "role", "updatedAt" FROM "User";
-DROP TABLE "User";
-ALTER TABLE "new_User" RENAME TO "User";
+-- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-PRAGMA foreign_keys=ON;
-PRAGMA defer_foreign_keys=OFF;
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Game_gameName_key" ON "Game"("gameName");
