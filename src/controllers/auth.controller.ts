@@ -17,7 +17,12 @@ export class AuthController{
         try{
             const userData = req.body
             const token = await AuthService.login(userData.email, userData.password)
-            //TODO inyectar cookie al cliente
+            res.cookie('token', token, {
+                maxAge: 60*60*1000, // 1 hora de caducidad
+                httpOnly: true,     // No es accesible mediante JS
+                //secure: true,       // Solo se envia si usas HTTPS
+                sameSite:'strict',  // Evita ataques CSRF
+            })
             res.status(201).json({message:'Login successfully:', token})
         }catch(error){
             next(error)
