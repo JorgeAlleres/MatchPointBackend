@@ -36,7 +36,7 @@ export class RoomController {
             next(error)
         }
     }
-    static async delete(idOffer:number, req:Request, res:Response, next:NextFunction) {
+    static async delete(req:Request, res:Response, next:NextFunction) {
         try {
             const id = Number.parseInt(req.params.id)
             if (isNaN(id)) throw new HttpException(400, "Invalid room ID");
@@ -47,7 +47,7 @@ export class RoomController {
             next(error)
         }
     }
-    static async update(id:number, req: Request, res: Response, next:NextFunction) {
+    static async update(req: Request, res: Response, next:NextFunction) {
         try {
             const roomData = req.body
             const id = Number.parseInt(req.params.id)
