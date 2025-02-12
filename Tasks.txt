@@ -1,0 +1,8 @@
+Backend
+-------------
+Añadir validaciones en post, delete y update de games
+Añadir validaciones en post, delete y update de rooms
+Ampliar validators.middleware con las validaciones
+Añadir ruta al front para hablitar cors
+
+Añadir un segundo token para no hacer login hasta despues de x dias
