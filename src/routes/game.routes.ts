@@ -5,9 +5,9 @@ import { isAuthenticate } from "../middlewares/auth.middleware";
 
 const router = Router()
 
-router.post('/',isAuthenticate,isAdmin, GameController.create)
-router.get('/:id',isAuthenticate, isAdmin, GameController.getById)
 router.get('/',isAuthenticate, isAdmin, GameController.getAll)
+router.get('/:id',isAuthenticate, isAdmin, GameController.getById)
+router.post('/',isAuthenticate,isAdmin, GameController.create)
 router.put('/:id',isAuthenticate, isAdmin, GameController.update)
 router.delete('/:id',isAuthenticate, isAdmin, GameController.delete)
 
