@@ -28,7 +28,7 @@ export class GameController {
         try {
             const game = req.body;
 
-            if (!game) throw new HttpException(400, "Category is required");
+            if (!game) throw new HttpException(400, "Game is required");
 
             const newGame = await GameService.create(game);
             res.status(201).json(newGame);
