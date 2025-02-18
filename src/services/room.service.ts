@@ -33,12 +33,26 @@ export class RoomService {
             }
         });
     }
+    /* Método para obtener las salas filtradas por gameId
+    static async getRoomsByGameId(gameId: number) {
+        try {
+            // Obtenemos las salas filtradas por 'gameId'
+            const rooms = await prisma.room.findMany({
+                where: {
+                    idRoomGame: gameId, // Filtramos por 'gameId'
+                },
+            });
+            return rooms;
+        } catch (error) {
+            throw new Error('Error al obtener las salas: ' + error.message);
+        }
+    }*/
     static async create(room: Room, idUser: number) {
         return await prisma.room.create({
             data: {
                 ...room,
                 idUserCreator: idUser
-            } 
+            }
         })
     }
     static async delete(id: number) {
@@ -49,13 +63,13 @@ export class RoomService {
         }
     }
     static async update(id: number, room: Room) {
-        const findRoom = await prisma.room.findUnique({where:{id}})
-        if(!findRoom) throw new HttpException(404, 'Room doesnt exists')
+        const findRoom = await prisma.room.findUnique({ where: { id } })
+        if (!findRoom) throw new HttpException(404, 'Room doesnt exists')
         return await prisma.room.update({
-            where: {id},
+            where: { id },
             data: {
                 ...room,
-            } 
+            }
         })
     }
 }
