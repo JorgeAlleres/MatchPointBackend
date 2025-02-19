@@ -4,6 +4,7 @@ CREATE TABLE "User" (
     "userName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "avatar" TEXT NOT NULL,
     "role" TEXT,
     "active" BOOLEAN NOT NULL DEFAULT true,
     "acceptNotifications" BOOLEAN NOT NULL DEFAULT true,
@@ -17,7 +18,7 @@ CREATE TABLE "Room" (
     "roomName" TEXT NOT NULL,
     "description" TEXT,
     "capacity" INTEGER NOT NULL,
-    "password" TEXT,
+    "code" TEXT NOT NULL,
     "private" BOOLEAN NOT NULL DEFAULT false,
     "published" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "expired" DATETIME,
@@ -35,6 +36,7 @@ CREATE TABLE "Game" (
     "gameName" TEXT NOT NULL,
     "genre" TEXT NOT NULL,
     "platform" TEXT NOT NULL,
+    "maxCapacity" INTEGER NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
 );

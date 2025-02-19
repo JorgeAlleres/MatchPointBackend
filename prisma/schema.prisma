@@ -19,6 +19,7 @@ model User {
   userName            String
   email               String    @unique
   password            String
+  avatar              String
   role                String?   //Admin  Vip   null
   active              Boolean   @default(true)
   acceptNotifications Boolean   @default(true)
@@ -35,7 +36,7 @@ model Room {
   roomName            String
   description         String?
   capacity            Int
-  password            String?
+  code                String
   private             Boolean   @default(false)
   published           DateTime  @default(now())  // iso8601
   expired             DateTime?                  // iso8601
@@ -57,6 +58,7 @@ model Game {
   gameName            String    @unique
   genre               String
   platform            String
+  maxCapacity         Int
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 
