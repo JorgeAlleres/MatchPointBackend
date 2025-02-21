@@ -1,4 +1,3 @@
-import { NextFunction } from "express";
 import { prisma } from "../database/database";
 import { HttpException } from "../exceptions/httpException";
 import { Room } from "prisma/prisma-client";

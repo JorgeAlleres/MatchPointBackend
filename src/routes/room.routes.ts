@@ -1,7 +1,6 @@
 import { Router } from "express";
 import {RoomController} from '../controllers/room.controller'
 import { isAuthenticate } from "../middlewares/auth.middleware";
-import { isAdmin } from "../middlewares/user.middleware";
 
 const router = Router()
 
