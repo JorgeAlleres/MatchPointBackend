@@ -11,6 +11,4 @@ router.post('/',isAuthenticate, RoomController.create)
 router.put('/:id',isAuthenticate, RoomController.update)
 router.delete('/:id',isAuthenticate, RoomController.delete)
 
-//router.get('/game/:gameId/rooms', RoomController.getRoomsByGameId);
-
 export default router

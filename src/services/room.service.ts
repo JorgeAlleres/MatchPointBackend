@@ -33,20 +33,6 @@ export class RoomService {
             }
         });
     }
-    /* Método para obtener las salas filtradas por gameId
-    static async getRoomsByGameId(gameId: number) {
-        try {
-            // Obtenemos las salas filtradas por 'gameId'
-            const rooms = await prisma.room.findMany({
-                where: {
-                    idRoomGame: gameId, // Filtramos por 'gameId'
-                },
-            });
-            return rooms;
-        } catch (error) {
-            throw new Error('Error al obtener las salas: ' + error.message);
-        }
-    }*/
     static async create(room: Room, idUser: number) {
         return await prisma.room.create({
             data: {
