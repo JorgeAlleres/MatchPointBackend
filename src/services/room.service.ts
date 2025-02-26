@@ -1,4 +1,3 @@
-import { NextFunction } from "express";
 import { prisma } from "../database/database";
 import { HttpException } from "../exceptions/httpException";
 import { Room } from "prisma/prisma-client";
@@ -25,15 +24,12 @@ export class RoomService {
             include: {
                 game: {
                     select: {
-                        gameName: true,
-                    },
-                },
-            },
+                        gameName: true
+                    }
+                }
+            }
         });
     }
-
-
-
     static async create(room: Room, idUser: number) {
         return await prisma.room.create({
             data: {

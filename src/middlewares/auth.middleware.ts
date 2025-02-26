@@ -1,4 +1,4 @@
-import { customJwtPayload } from '@/types/express'
+import { customJwtPayload } from '../types/express'
 import {Response, Request, NextFunction} from 'express'
 import jwt from "jsonwebtoken"
 

@@ -2,7 +2,7 @@ import { Router } from "express";
 import {GameController} from '../controllers/game.controller'
 import { isAdmin } from "../middlewares/user.middleware";
 import { isAuthenticate } from "../middlewares/auth.middleware";
-import { RoomController } from "@/controllers/room.controller";
+import { RoomController } from "../controllers/room.controller";
 
 const router = Router()
 
