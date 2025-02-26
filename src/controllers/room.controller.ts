@@ -21,7 +21,7 @@ export class RoomController {
             const { idRoomGame, roomName, capacity, privacity } = req.query;
 
             // Validación y conversión de parámetros
-            const idGame = Number(idRoomGame)
+            const idGame = idRoomGame ? Number(idRoomGame) : undefined
             const roomNameString = roomName ? String(roomName) : undefined;
             const capacityNumber = capacity ? Number(capacity) : undefined;
             const privacityBoolean = privacity === "false" ? false : undefined; // Filtrar por salas públicas

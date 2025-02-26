@@ -9,10 +9,10 @@ export class RoomService {
         return findRoom
     }
 
-    static async getAll(idRoomGame: number, roomName?: string, capacity?: number, privateQuery?: boolean) {
+    static async getAll(idRoomGame?: number, roomName?: string, capacity?: number, privateQuery?: boolean) {
         return await prisma.room.findMany({
             where: {
-                idRoomGame, // Filtramos por id del juego
+                ...(idRoomGame !== undefined ? { idRoomGame: idRoomGame } : {}), // Filtramos por id del juego
                 ...(roomName ? { roomName: { contains: roomName } } : {}), // Filtrar solo si roomName está presente
                 ...(capacity !== undefined ? { capacity: { gte: capacity } } : {}), // Filtrar solo si capacity está presente
                 ...(privateQuery === false ? { private: false } : {}), // Filtrar solo si privateQuery está presente
