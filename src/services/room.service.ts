@@ -9,44 +9,31 @@ export class RoomService {
         if (!findRoom) throw new HttpException(404, 'Room not found')
         return findRoom
     }
-    static async getAll(roomName: string = '') {
 
+    static async getAll(idRoomGame: number, roomName?: string, capacity?: number, privateQuery?: boolean) {
         return await prisma.room.findMany({
             where: {
-                ...(roomName && {
-                    roomName: {
-                        contains: roomName,
-                        //mode: "insensitive" // Búsqueda sin distinción entre mayúsculas y minúsculas
-                    }
-                })
+                idRoomGame, // Filtramos por id del juego
+                ...(roomName ? { roomName: { contains: roomName } } : {}), // Filtrar solo si roomName está presente
+                ...(capacity !== undefined ? { capacity: { gte: capacity } } : {}), // Filtrar solo si capacity está presente
+                ...(privateQuery === false ? { private: false } : {}), // Filtrar solo si privateQuery está presente
             },
             orderBy: {
-                createdAt: 'desc'
+                createdAt: "desc",
             },
             take: 100,
             include: {
                 game: {
                     select: {
-                        gameName: true
-                    }
-                }
-            }
+                        gameName: true,
+                    },
+                },
+            },
         });
     }
-    /* Método para obtener las salas filtradas por gameId
-    static async getRoomsByGameId(gameId: number) {
-        try {
-            // Obtenemos las salas filtradas por 'gameId'
-            const rooms = await prisma.room.findMany({
-                where: {
-                    idRoomGame: gameId, // Filtramos por 'gameId'
-                },
-            });
-            return rooms;
-        } catch (error) {
-            throw new Error('Error al obtener las salas: ' + error.message);
-        }
-    }*/
+
+
+
     static async create(room: Room, idUser: number) {
         return await prisma.room.create({
             data: {
