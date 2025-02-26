@@ -17,7 +17,7 @@ app.use(cookieParser())
 app.use(express.json())
 
 app.use(cors({
-    origin: ['https://matchpointbackend.onrender.com', 'http://localhost:5173'],
+    origin: ['https://matchpointfrontend.onrender.com', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }))
