@@ -2,6 +2,7 @@ import express, {Response, Request} from 'express'
 import authRouter from './routes/auth.routes'
 import userRouter from './routes/user.routes'
 import roomRouter from './routes/room.routes'
+import userRoomRouter from './routes/user_room.routes'
 import gameRouter from './routes/game.routes'
 import helmet from 'helmet'
 import cors from 'cors'
@@ -23,7 +24,7 @@ app.use(cors({
 }))
 
 const limiter = rateLimit({
-    max: 100,
+    max: 10000,
     windowMs: 1000*15*60 //15 minutos
 })
 app.use(limiter)
@@ -31,6 +32,7 @@ app.use(limiter)
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
 app.use('/api/room',roomRouter)
+app.use('/api/user_room',userRoomRouter)
 app.use('/api/game',gameRouter)
 
 app.get('/', (req:Request, res:Response)=>{
