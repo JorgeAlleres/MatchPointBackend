@@ -43,11 +43,11 @@ export class AuthService {
 
         // generar el token de autenticación
         const token = jwt.sign(
-            {id: findUser.id, email: findUser.email, role: findUser.role },
+            {id: findUser.id, email: findUser.email, role: findUser.role, avatar: findUser.avatar },
             TOKEN_PASSWORD,
             { expiresIn: "1h" }
         )
         // devolver el token y el usuario
-        return { token, user: { id: findUser.id, email: findUser.email, role: findUser.role } }
+        return { token, user: { id: findUser.id, email: findUser.email, role: findUser.role, avatar: findUser.avatar } }
     }
 }
