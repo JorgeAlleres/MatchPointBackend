@@ -19,8 +19,6 @@ export class AuthController {
         try {
             const userData = req.body
             const { token, user } = await AuthService.login(userData.email, userData.password)
-            //TODO inyectar cookie al cliente
-            console.log(token, user)
 
             const validSameSiteValues = ["none", "lax", "strict"] as const; // Valores permitidos
 
