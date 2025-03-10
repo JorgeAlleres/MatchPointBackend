@@ -32,7 +32,7 @@ app.use(limiter)
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
 app.use('/api/room',roomRouter)
-app.use('/api/user_room',userRoomRouter)
+app.use('/api/user-room',userRoomRouter)
 app.use('/api/game',gameRouter)
 
 app.get('/', (req:Request, res:Response)=>{
